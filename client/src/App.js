@@ -1,13 +1,14 @@
-import { useEffect } from "react"
 import './App.css';
 import io from 'socket.io-client';
+import { useEffect } from "react"
 const socket = io.connect("http://localhost:3002")
 
-// something
+
 function App() {
 
   const sendMessage = () => {
       socket.emit("send_message", { message: "Hello" });
+      
   };
 
   useEffect(() => {

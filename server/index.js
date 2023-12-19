@@ -14,11 +14,12 @@ const io = new Server(server, {
     },
 });
 
+
 io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`)
 
     socket.on("send_message", (data) => {
-            socket.broadcast.emit("received_message", data)
+        socket.broadcast.emit("received_message", data)
     });
 });
 
