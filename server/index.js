@@ -19,10 +19,10 @@ io.on("connection", (socket) => {
 
     socket.on("send_message", (data) => {
             socket.broadcast.emit("received_message", data)
-    })
-})
+    });
+});
 
 server.listen(3002, () => {
     console.log("SERVER IS RUNNING")
-})
+});
 

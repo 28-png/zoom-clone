@@ -7,12 +7,12 @@ const socket = io.connect("http://localhost:3002")
 function App() {
 
   const sendMessage = () => {
-      socket.emit("send_message", {message: "Hello"})
+      socket.emit("send_message", { message: "Hello" });
   };
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log("here")
+      console.log(data.message);
       alert(data.message);
     })
   }, [])
@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <input placeholder='Message...' />
-      <button onClick={sendMessage}>Send Message</button>
+      <button onClick={ sendMessage }>Send Message</button>
     </div>
   );
 }
