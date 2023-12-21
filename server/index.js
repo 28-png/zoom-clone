@@ -6,6 +6,7 @@ const { Server } = require('socket.io')
 const cors = require('cors')
 const server = http.createServer(app)
 app.use(cors());
+const PORT = process.env.PORT || 3001;
 
 const io = new Server(server, {
     cors: {
@@ -14,16 +15,19 @@ const io = new Server(server, {
     },
 });
 
-
 io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`)
 
+    socket.on("join_room", (data) => {
+        socket.join(data);
+    })
+
     socket.on("send_message", (data) => {
-        socket.broadcast.emit("received_message", data)
+        socket.to(data.room).emit("received_message", data)
     });
 });
 
-server.listen(3002, () => {
+server.listen(PORT, () => {
     console.log("SERVER IS RUNNING")
 });
 
