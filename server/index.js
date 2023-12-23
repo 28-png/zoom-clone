@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http');
-const { Server } = require('socket.io')
+const { Server } = require('socket.io');
 
 
 const cors = require('cors')
@@ -19,9 +19,10 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`)
 
-    socket.on("join_room", (data) => {
-        socket.join(data);
-    })
+    socket.on("join_room", (roomId) => {
+        console.log("Room ID: " + roomId)
+        socket.join(roomId);
+    });
 
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("received_message", data)

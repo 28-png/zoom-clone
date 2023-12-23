@@ -19,9 +19,9 @@ function App() {
   const newUuid = uuid()
   
   const joinRoom = () => {
-    if (room !== "") {
-      socket.emit("join_room", room)
-    }
+    // if (room !== "") {
+      socket.emit("join_room", newUuid)
+    // }
   }
 
   const sendMessage = () => {
