@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const { Server } = require('socket.io');
+const { v4: uuidV4 } = require('uuid');
 
 
 const cors = require('cors')
@@ -19,10 +20,11 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`)
 
-    socket.on("join_room", (roomId) => {
-        console.log("Room ID: " + roomId)
-        socket.join(roomId);
-    });
+    // socket.on("join_room", (roomId) => {
+    //     console.log("Room ID: " + roomId)
+    //     socket.join(roomId);
+    // });
+    socket.emit("join-room", uuidV4())
 
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("received_message", data)

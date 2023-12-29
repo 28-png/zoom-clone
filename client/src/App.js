@@ -3,7 +3,6 @@ import './App.css';
 import io from 'socket.io-client';
 import { useEffect, useState } from "react"
 import Webcam from "react-webcam"
-import { v4 as uuid } from 'uuid';
 const socket = io.connect("http://localhost:3001")
 
 
@@ -14,15 +13,17 @@ function App() {
 
   const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("")
-
   
-  const newUuid = uuid()
   
   const joinRoom = () => {
-    // if (room !== "") {
-      socket.emit("join_room", newUuid)
-    // }
+    if (room !== "") {
+      socket.emit("join_room", room)
+    }
   }
+
+  socket.on("join-room", (roomId) => {
+    console.log("Room ID: " + roomId)
+  })
 
   const sendMessage = () => {
       socket.emit("send_message", { message, room });
@@ -38,7 +39,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Routes>
-      <Route path="/" element={ <Navigate to={ `/${newUuid}` } /> } />
+      <Route path="/" element={ <Navigate to={ `/${room}` } /> } />
       </Routes>
       </BrowserRouter>
       <Webcam className='video-grid'/>
