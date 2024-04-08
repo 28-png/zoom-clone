@@ -22,11 +22,11 @@ io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`)
 
     socket.on("join_room", (roomId) => {
-        console.log("Room Id: " + roomId)
         socket.join(roomId);
     });
     socket.emit("join-room", uuidV4())
 
+    // have not added feature message feature yet.
     socket.on("send_message", (data) => {
         socket.to(data.room).emit("received_message", data)
     });
